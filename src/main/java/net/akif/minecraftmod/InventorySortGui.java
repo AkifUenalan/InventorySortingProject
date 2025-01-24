@@ -18,7 +18,7 @@ public class InventorySortGui {
     private static final int BUTTON_WIDTH = 20;
     private static final int BUTTON_HEIGHT = 18;
 
-    // Die Locations für den png
+    // Die Locations für den png dateien.
 
     private static final ResourceLocation BUTTON_UNFOCUSED =
             ResourceLocation.fromNamespaceAndPath("minecraftmod", "textures/gui/button_unfocused.png");
@@ -26,7 +26,7 @@ public class InventorySortGui {
     private static final ResourceLocation BUTTON_FOCUSED =
             ResourceLocation.fromNamespaceAndPath("minecraftmod", "textures/gui/button_focused.png");
 
-    //Wenn inventar geöffnet wird
+    // Wenn inventar geöffnet wird ---- Bei verwendung von SubscribeEvent müssen wir nicht in das main mod class dieses mod registrieren oder aufrufen.
     @SubscribeEvent
     public static void onGuiOpen(ScreenEvent.Init.Post event) {
         if (event.getScreen() instanceof InventoryScreen inventoryScreen) {
@@ -50,7 +50,7 @@ public class InventorySortGui {
                             // Bescheid geben das die inventar sortiert wurde. ( In Game )
                             serverPlayer.sendSystemMessage(Component.literal("Your inventory has been sorted!"));
 
-                            // LOGGER in Run
+                            // LOGGER in Run bzw Bescheid geber
                             System.out.println("Inventory sorted for player: " + serverPlayer.getName().getString());
 
                             // Alle Inventar Änderungen speichern
@@ -62,7 +62,7 @@ public class InventorySortGui {
         }
     }
 
-    // Creation von CustomWidget
+    // Erstellung von CustomWidget (Button)
     private static class CustomSortButton extends Button {
         public CustomSortButton(int x, int y, int width, int height, Component message, OnPress onPress) {
             super(x, y, width, height, message, onPress, DEFAULT_NARRATION);
@@ -70,9 +70,12 @@ public class InventorySortGui {
 
         @Override
         public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-            // Welche textur soll verwendet werden wenn isHovered() ?
-            ResourceLocation buttonTexture = isHovered() ? BUTTON_FOCUSED : BUTTON_UNFOCUSED;
+            // Welche png soll verwendet werden wenn isHovered() ?
+            ResourceLocation buttonTexture;
+            if (isHovered()) buttonTexture = BUTTON_FOCUSED;
+            else buttonTexture = BUTTON_UNFOCUSED;
 
+            // Default Textures
             RenderSystem.setShaderTexture(0, buttonTexture);
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
@@ -80,12 +83,6 @@ public class InventorySortGui {
 
             guiGraphics.blit(buttonTexture, this.getX(), this.getY(), 0, 0,
                     BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
-
-            guiGraphics.drawCenteredString(Minecraft.getInstance().font,
-                    getMessage(),
-                    this.getX() + BUTTON_WIDTH / 2,
-                    this.getY() + (BUTTON_HEIGHT - 8) / 2,
-                    isHovered() ? 0xFFFFFF : 0xE0E0E0);
 
             RenderSystem.disableBlend();
         }

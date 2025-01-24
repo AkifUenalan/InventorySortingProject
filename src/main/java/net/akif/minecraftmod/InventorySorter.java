@@ -12,7 +12,7 @@ public class InventorySorter {
         // Speichert alle Items ins Array. (Außer hotbar)
         List<ItemStack> allItems = new ArrayList<>();
 
-        // Nimmt er alles mit
+        // Nimmt er die Items mit
         for (int i = 9; i < inventory.getContainerSize(); i++) {
             ItemStack itemStack = inventory.getItem(i);
             if (!itemStack.isEmpty()) {
@@ -34,7 +34,7 @@ public class InventorySorter {
                     if (ItemStack.isSameItem(itemStack, existingStack) && existingStack.getCount() < 64) {
                         int space = 64 - existingStack.getCount();
                         int toAdd = Math.min(itemStack.getCount(), space);
-                        existingStack.grow(toAdd);  // addiert zu dem existierten stack zum adden
+                        existingStack.grow(toAdd);  // addiert zu dem existierten stack
                         itemStack.shrink(toAdd);    // subtrahiert von dem original stack (bevor sortierte)
                         stacked = true;
                         if (itemStack.isEmpty()) break;
@@ -42,7 +42,7 @@ public class InventorySorter {
                 }
             }
 
-            // Wenn Item nicht stackbar ist wie z.B. Armor, Sword, ... macht er ein neue stack
+            // Wenn Item nicht stackbar ist wie z.B. Armor, Sword, ... macht es ein neuen stack
             if (!stacked && !itemStack.isEmpty()) {
                 itemStack.setCount(Math.min(itemStack.getCount(), 64));  // Cap at 64 per stack
                 stackedItems.add(itemStack.copy());
