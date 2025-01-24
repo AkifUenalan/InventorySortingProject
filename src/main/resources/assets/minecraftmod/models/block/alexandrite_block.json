@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "invsortingmod:block/alexandrite_block"
+  }
+}
