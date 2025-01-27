@@ -15,67 +15,96 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = "invsortingmod", bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class InventorySortGui {
+
     private static final int BUTTON_WIDTH = 20;
     private static final int BUTTON_HEIGHT = 18;
 
-    // Die Locations für den png dateien.
-
+    // Button textures
     private static final ResourceLocation BUTTON_UNFOCUSED =
             ResourceLocation.fromNamespaceAndPath("minecraftmod", "textures/gui/button_unfocused.png");
-
     private static final ResourceLocation BUTTON_FOCUSED =
             ResourceLocation.fromNamespaceAndPath("minecraftmod", "textures/gui/button_focused.png");
 
-    // Wenn inventar geöffnet wird ---- Bei verwendung von SubscribeEvent müssen wir nicht in das main mod class dieses mod registrieren oder aufrufen.
+    private static final ResourceLocation BOOK_UNFOCUSED =
+            ResourceLocation.fromNamespaceAndPath("minecraftmod", "textures/gui/book_unfocused.png");
+    private static final ResourceLocation BOOK_FOCUSED =
+            ResourceLocation.fromNamespaceAndPath("minecraftmod", "textures/gui/book_focused.png");
+
     @SubscribeEvent
     public static void onGuiOpen(ScreenEvent.Init.Post event) {
         if (event.getScreen() instanceof InventoryScreen inventoryScreen) {
-            int recipeBookX = ((AbstractContainerScreen<?>) inventoryScreen).getGuiLeft() + 104;
+            int recipeBookX = ((AbstractContainerScreen<?>) inventoryScreen).getGuiLeft() + 106;
             int y = ((AbstractContainerScreen<?>) inventoryScreen).getGuiTop() + 61;
             int x = recipeBookX + 24;
 
-            CustomSortButton sortButton = new CustomSortButton(
+            // First button using regular button textures
+            CustomSortButton sortButtonAlphabet = new CustomSortButton(
                     x, y, BUTTON_WIDTH, BUTTON_HEIGHT,
                     Component.literal(""),
                     button -> {
-
                         Minecraft minecraft = Minecraft.getInstance();
                         if (minecraft.getSingleplayerServer() != null) {
                             ServerPlayer serverPlayer = minecraft.getSingleplayerServer().getPlayerList().getPlayerByName("Dev");
-
-                            // Sortier das inventar
                             assert serverPlayer != null;
-                            InventorySorter.sortInventory(serverPlayer.getInventory());
-
-                            // Bescheid geben das die inventar sortiert wurde. ( In Game )
-                            serverPlayer.sendSystemMessage(Component.literal("Your inventory has been sorted!"));
-
-                            // LOGGER in Run bzw Bescheid geber
+                            InventorySorter.sortInventory(serverPlayer.getInventory(), false);
+                            serverPlayer.sendSystemMessage(Component.literal("Your inventory has been sorted Alphabetically!"));
                             System.out.println("Inventory sorted for player: " + serverPlayer.getName().getString());
-
-                            // Alle Inventar Änderungen speichern
                             serverPlayer.inventoryMenu.broadcastChanges();
                         }
-                    }
+                    },
+                    BUTTON_UNFOCUSED,  // Unfocused texture
+                    BUTTON_FOCUSED     // Focused texture
             );
-            event.addListener(sortButton);
+            event.addListener(sortButtonAlphabet);
         }
     }
 
-    // Erstellung von CustomWidget (Button)
+    @SubscribeEvent
+    public static void onGuiOpen2(ScreenEvent.Init.Post event) {
+        if (event.getScreen() instanceof InventoryScreen inventoryScreen) {
+            int recipeBookX = ((AbstractContainerScreen<?>) inventoryScreen).getGuiLeft() + 127;
+            int y = ((AbstractContainerScreen<?>) inventoryScreen).getGuiTop() + 61;
+            int x = recipeBookX + 24;
+
+            // Second button using book textures
+            CustomSortButton sortButtonQuantity = new CustomSortButton(
+                    x, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+                    Component.literal(""),
+                    button -> {
+                        Minecraft minecraft = Minecraft.getInstance();
+                        if (minecraft.getSingleplayerServer() != null) {
+                            ServerPlayer serverPlayer = minecraft.getSingleplayerServer().getPlayerList().getPlayerByName("Dev");
+                            assert serverPlayer != null;
+
+                            InventorySorter.sortInventory(serverPlayer.getInventory(), true);
+
+                            serverPlayer.sendSystemMessage(Component.literal("Your inventory has been sorted by Quantity!"));
+                            System.out.println("Inventory sorted for player: " + serverPlayer.getName().getString());
+                            serverPlayer.inventoryMenu.broadcastChanges();
+                        }
+                    },
+                    BOOK_UNFOCUSED,   // Unfocused texture
+                    BOOK_FOCUSED      // Focused texture
+            );
+            event.addListener(sortButtonQuantity);
+        }
+    }
+
     private static class CustomSortButton extends Button {
-        public CustomSortButton(int x, int y, int width, int height, Component message, OnPress onPress) {
+        private final ResourceLocation unfocusedTexture;
+        private final ResourceLocation focusedTexture;
+
+        public CustomSortButton(int x, int y, int width, int height, Component message, OnPress onPress,
+                                ResourceLocation unfocusedTexture, ResourceLocation focusedTexture) {
             super(x, y, width, height, message, onPress, DEFAULT_NARRATION);
+            this.unfocusedTexture = unfocusedTexture;
+            this.focusedTexture = focusedTexture;
         }
 
         @Override
         public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-            // Welche png soll verwendet werden wenn isHovered() ?
-            ResourceLocation buttonTexture;
-            if (isHovered()) buttonTexture = BUTTON_FOCUSED;
-            else buttonTexture = BUTTON_UNFOCUSED;
+            ResourceLocation buttonTexture = isHovered() ? focusedTexture : unfocusedTexture;
 
-            // Default Textures
             RenderSystem.setShaderTexture(0, buttonTexture);
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();

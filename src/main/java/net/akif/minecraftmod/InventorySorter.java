@@ -8,7 +8,7 @@ import java.util.List;
 
 public class InventorySorter {
 
-    public static void sortInventory(Inventory inventory) {
+    public static void sortInventory(Inventory inventory, boolean byQuantity) {
         // Speichert alle Items ins Array. (Außer hotbar)
         List<ItemStack> allItems = new ArrayList<>();
 
@@ -20,8 +20,14 @@ public class InventorySorter {
             }
         }
 
-        // sortiert die Items nach Alphabet
-        allItems.sort((stack1, stack2) -> stack1.getItem().getDescription().getString().compareTo(stack2.getItem().getDescription().getString()));
+        // sortiert die Items nach Alphabet oder quantity
+        if (!byQuantity) {
+            allItems.sort((stack1, stack2) -> stack1.getItem().getDescription().getString().compareTo(stack2.getItem().getDescription().getString()));
+        } else { // Sort by quantity
+            allItems.sort((stack1, stack2) -> Integer.compare(stack2.getCount(), stack1.getCount()));
+        }
+
+
 
         // stacked die gleiche items
         List<ItemStack> stackedItems = new ArrayList<>();
