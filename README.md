@@ -2,6 +2,7 @@
 
 ## Features
 - Sort inventory by item name
+- Sort inventory by quantity
 - Easy-to-use GUI button in inventory screen
 
 ## Requirements
@@ -17,4 +18,4 @@
 
 ## Usage
 - Open your inventory
-- Click the "Sort" button to organize items
+- Click the one of the two button to organize items
