@@ -37,7 +37,7 @@ public class InventorySortGui {
             int y = ((AbstractContainerScreen<?>) inventoryScreen).getGuiTop() + 61;
             int x = recipeBookX + 24;
 
-            // First button using regular button textures
+            // erste button mit dem regulären texturen
             CustomSortButton sortButtonAlphabet = new CustomSortButton(
                     x, y, BUTTON_WIDTH, BUTTON_HEIGHT,
                     Component.literal(""),
@@ -45,9 +45,10 @@ public class InventorySortGui {
                         Minecraft minecraft = Minecraft.getInstance();
                         if (minecraft.getSingleplayerServer() != null) {
                             ServerPlayer serverPlayer = minecraft.getSingleplayerServer().getPlayerList().getPlayerByName("Dev");
+
                             assert serverPlayer != null;
                             InventorySorter.sortInventory(serverPlayer.getInventory(), false);
-                            serverPlayer.sendSystemMessage(Component.literal("Your inventory has been sorted Alphabetically!"));
+                            serverPlayer.sendSystemMessage(Component.literal("Your inventory is now sorted alphabetically."));
                             System.out.println("Inventory sorted for player: " + serverPlayer.getName().getString());
                             serverPlayer.inventoryMenu.broadcastChanges();
                         }
@@ -66,7 +67,7 @@ public class InventorySortGui {
             int y = ((AbstractContainerScreen<?>) inventoryScreen).getGuiTop() + 61;
             int x = recipeBookX + 24;
 
-            // Second button using book textures
+            //zweite button mit dem book texturen
             CustomSortButton sortButtonQuantity = new CustomSortButton(
                     x, y, BUTTON_WIDTH, BUTTON_HEIGHT,
                     Component.literal(""),
@@ -78,7 +79,7 @@ public class InventorySortGui {
 
                             InventorySorter.sortInventory(serverPlayer.getInventory(), true);
 
-                            serverPlayer.sendSystemMessage(Component.literal("Your inventory has been sorted by Quantity!"));
+                            serverPlayer.sendSystemMessage(Component.literal("Your inventory is now sorted by quantity."));
                             System.out.println("Inventory sorted for player: " + serverPlayer.getName().getString());
                             serverPlayer.inventoryMenu.broadcastChanges();
                         }
@@ -90,6 +91,7 @@ public class InventorySortGui {
         }
     }
 
+    // button stuff classe die den Originalen Button klasse extendiert
     private static class CustomSortButton extends Button {
         private final ResourceLocation unfocusedTexture;
         private final ResourceLocation focusedTexture;
