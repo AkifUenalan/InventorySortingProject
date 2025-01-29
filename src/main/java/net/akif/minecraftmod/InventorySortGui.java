@@ -24,7 +24,7 @@ public class InventorySortGui {
             ResourceLocation.fromNamespaceAndPath("minecraftmod", "textures/gui/button_unfocused.png");
     private static final ResourceLocation BUTTON_FOCUSED =
             ResourceLocation.fromNamespaceAndPath("minecraftmod", "textures/gui/button_focused.png");
-
+    //------------------------------------------------------------------------------------------------------------------\\
     private static final ResourceLocation BOOK_UNFOCUSED =
             ResourceLocation.fromNamespaceAndPath("minecraftmod", "textures/gui/book_unfocused.png");
     private static final ResourceLocation BOOK_FOCUSED =
