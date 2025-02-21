@@ -1,0 +1,36 @@
+Projektbeschreibung
+Projektname: Inventory Sorting Mod
+
+Wer hat daran gearbeitet?
+Das Projekt wurde von Akif Malik Ünalan entwickelt.
+
+Was waren die Ziele?
+Das Hauptziel des Projekts war die Entwicklung eines Mods für Minecraft,
+der es Spielern ermöglicht, ihre Inventaritems automatisch zu sortieren.
+Der Mod sollte eine benutzerfreundliche Schnittstelle bieten, die es den Spielern ermöglicht,
+ihre Items alphabetisch oder nach Menge zu sortieren. Ein weiteres Ziel war es, die Benutzererfahrung zu verbessern,
+indem die Sortierfunktion einfach zugänglich gemacht wird.
+
+Welche Technologien wurden verwendet?
+
+Minecraft Forge: Eine Modding-API für Minecraft, die die Entwicklung von Mods erleichtert.
+Java: Die Programmiersprache, in der der Mod entwickelt wurde.
+Gradle: Ein Build-Management-Tool, das für die Verwaltung der Abhängigkeiten und den Build-Prozess verwendet wurde.
+Git: Für die Versionskontrolle und Zusammenarbeit.
+
+Was hast du geschrieben? Was stammt aus externen Quellen?
+
+Selbstgeschriebener Code: Die Hauptlogik für die Sortierung des Inventars, die Benutzeroberfläche für den Sortierbutton und die Integration in das Minecraft-Interface wurden von mir entwickelt.
+Externe Quellen: Einige Teile des Codes und die Struktur basieren auf Tutorials und Dokumentationen von Minecraft Forge sowie Beispielen aus der Modding-Community.
+Die Implementierung von Netzwerkkommunikation und GUI-Elementen wurde teilweise aus diesen Quellen übernommen.
+
+Was sind bekannte Probleme?
+
+Positionierung des Sortierbuttons: Der Button kann sich je nach geöffnetem Zustand des Rezeptbuchs verschieben. Es könnte eine bessere Logik zur Handhabung der Positionierung implementiert werden.
+
+Weiterentwicklungsmöglichkeiten:
+
+Erweiterte Sortieroptionen: Implementierung zusätzlicher Sortiermethoden, wie z.B. nach Rarity oder Typ.
+Benutzerdefinierte Einstellungen: Möglichkeit für Spieler, ihre Sortierpräferenzen zu speichern und anzupassen.
+GUI-Verbesserungen: Verbesserung der Benutzeroberfläche, um die Benutzererfahrung zu optimieren.
+Multiplayer-Unterstützung: Sicherstellen, dass die Sortierfunktion in Multiplayer-Szenarien korrekt funktioniert.
