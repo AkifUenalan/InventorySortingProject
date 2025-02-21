@@ -53,8 +53,8 @@ public class InventorySortGui {
                             serverPlayer.inventoryMenu.broadcastChanges();
                         }
                     },
-                    BUTTON_UNFOCUSED,  // Unfocused texture
-                    BUTTON_FOCUSED     // Focused texture
+                    BUTTON_UNFOCUSED,
+                    BUTTON_FOCUSED
             );
             event.addListener(sortButtonAlphabet);
         }
